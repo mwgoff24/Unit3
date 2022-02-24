@@ -30,3 +30,29 @@ Maybe
 
 Outlook is not good
 '''
+# dice roll
+"""
+import random
+
+# asking user to roll a dice
+roll_prompt = input("Type enter to roll the dice. ")
+if roll_prompt == '':
+    roll = random.randint(1, 6)
+
+# displays what number the user rolled
+    print(f"You rolled a {roll}.")
+"""
+# magic 8 ball
+""" 
+import random
+
+# choices for magic 8 ball 
+ball_choices = random.choice(['Outlook is good', 'Ask again later', 'Yes', 'No', 
+'Most likely no', 'Most likely yes', 'Maybe', 'Outlook is not good'])
+
+#prompt user to ask a question
+ball_prompt = input("Ask the magic 8 ball a yes/no question. ")
+
+# displays one of the choices
+print(ball_choices) 
+"""
