@@ -240,11 +240,22 @@ def shuffled_deck():
 # returns: integer
 def player_turn(name, deck):
     card = deck.pop(0)
-    print(f"{name} drew a: {card}.")
+    print(f"{name} drew card {card}.")
 
     return card
     
 # creates a deck of shuffled cards
 deck = shuffled_deck()
-
+score1 = 0
+score2 = 0
+name = input("What is your name, player 1? ")
+name2 = input("What is your name, player 2? ")
 print(deck)
+
+def compare_scores():
+    if player_turn(name, deck) > player_turn(name2, deck):
+        print(f"{name} has the higher score.")
+    else:
+        print(f"{name2} has the higher score.")
+
+compare_scores()
