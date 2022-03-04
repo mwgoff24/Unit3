@@ -240,22 +240,49 @@ def shuffled_deck():
 # returns: integer
 def player_turn(name, deck):
     card = deck.pop(0)
-    print(f"{name} drew card {card}.")
+    print(f"{name} drew {card}.")
 
     return card
     
 # creates a deck of shuffled cards
 deck = shuffled_deck()
-score1 = 0
-score2 = 0
 name = input("What is your name, player 1? ")
 name2 = input("What is your name, player 2? ")
-print(deck)
 
-def compare_scores():
-    if player_turn(name, deck) > player_turn(name2, deck):
-        print(f"{name} has the higher score.")
-    else:
-        print(f"{name2} has the higher score.")
+# player decks
+player1_deck = deck[:26]
+player2_deck = deck[26:]
 
-compare_scores()
+# score varialbles
+player_score = 0
+computer_score = 0
+point_at_stake = 2
+
+# card game loop
+while len(player1_deck) > 0:
+    print(f"{name}'s score is {player_score}. \n"
+    f"{name2}'s score is {computer_score}.")
+    input("Press enter for player 1's round. \n")
+    card1 = player_turn(name, player1_deck)
+    input("Press enter for player 2's round. \n")
+    card2 = player_turn(name2, player2_deck)
+
+    if card1 > card2:
+        print(f"{name} has the higher score. \n")
+        player_score += point_at_stake
+        point_at_stake = 2
+    elif card2 > card1:
+        print(f"{name2} has the higher score. \n")
+        computer_score += point_at_stake
+        point_at_stake = 2
+    else: # a tie
+        print("A tie! This. Means. War!")
+        point_at_stake += 2
+
+print("You ran out of cards!")
+print(f"{name}'s score: {player_score}. \n"
+f"{name2}'s score: {computer_score}.")
+if player_score > computer_score:
+    print(f"{name} is the winner! Sorry, {name2}.")
+else:
+    print(f"{name2} is the winner! Sorry, {name}.")
