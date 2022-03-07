@@ -243,46 +243,60 @@ def player_turn(name, deck):
     print(f"{name} drew {card}.")
 
     return card
-    
-# creates a deck of shuffled cards
-deck = shuffled_deck()
-name = input("What is your name, player 1? ")
-name2 = input("What is your name, player 2? ")
 
-# player decks
-player1_deck = deck[:26]
-player2_deck = deck[26:]
 
-# score varialbles
-player_score = 0
-computer_score = 0
-point_at_stake = 2
+reset = True
 
-# card game loop
-while len(player1_deck) > 0:
-    print(f"{name}'s score is {player_score}. \n"
-    f"{name2}'s score is {computer_score}.")
-    input("Press enter for player 1's round. \n")
-    card1 = player_turn(name, player1_deck)
-    input("Press enter for player 2's round. \n")
-    card2 = player_turn(name2, player2_deck)
+while reset:
+    # creates a deck of shuffled cards
+    deck = shuffled_deck()
+    name = input("What is your name, player 1? ")
+    name2 = input("What is your name, player 2? ")
 
-    if card1 > card2:
-        print(f"{name} has the higher score. \n")
-        player_score += point_at_stake
-        point_at_stake = 2
-    elif card2 > card1:
-        print(f"{name2} has the higher score. \n")
-        computer_score += point_at_stake
-        point_at_stake = 2
-    else: # a tie
-        print("A tie! This. Means. War!")
-        point_at_stake += 2
+    # player decks
+    player1_deck = deck[:26]
+    player2_deck = deck[26:]
 
-print("You ran out of cards!")
-print(f"{name}'s score: {player_score}. \n"
-f"{name2}'s score: {computer_score}.")
-if player_score > computer_score:
-    print(f"{name} is the winner! Sorry, {name2}.")
-else:
-    print(f"{name2} is the winner! Sorry, {name}.")
+    # score varialbles
+    player_score = 0
+    computer_score = 0 # computer_score is variable for player 2 score
+    point_at_stake = 2
+
+    # card game loop
+    while len(player1_deck) > 0:
+        print(f"{name}'s score is {player_score}. \n"
+        f"{name2}'s score is {computer_score}.")
+        input("Press enter for player 1's round. \n")
+        card1 = player_turn(name, player1_deck)
+        input("Press enter for player 2's round.")
+        card2 = player_turn(name2, player2_deck)
+
+        # compare_scores
+        if card1 > card2:
+            print(f"{name} has the higher score. \n")
+            player_score += point_at_stake
+            point_at_stake = 2
+        elif card2 > card1:
+            print(f"{name2} has the higher score. \n")
+            computer_score += point_at_stake
+            point_at_stake = 2
+        else: # a tie
+            print("A tie! This. Means. War!")
+            point_at_stake += 2
+
+
+    # end of game
+    print("You ran out of cards!")
+    print(f"{name}'s score: {player_score}. \n"
+    f"{name2}'s score: {computer_score}.")
+    if player_score > computer_score:
+        print(f"{name} is the winner! Sorry, {name2}.")
+    else:
+        print(f"{name2} is the winner! Sorry, {name}.")
+        
+    # play again
+    play_again = input("Do you want to play again? y or n? ")
+    if play_again == 'y':
+        print("Let's play again then!")
+    else:
+        reset = False
