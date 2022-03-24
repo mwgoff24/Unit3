@@ -1,4 +1,5 @@
 # oregon trail game
+import random
 
 # introduction to game
 print("Welcome to the Oregon Trail! \n"
@@ -7,39 +8,67 @@ print("Welcome to the Oregon Trail! \n"
 
 # asks for name
 name = input("What is your name? ")
-print(f"{name}, in this game, you can travel, hunt, rest, show your status, list these commands, or quit out of the game. \n")
-import random
+print(f"{name}, in this game, you can travel, hunt, rest, show your status, ask for help, or quit out of the game. \n")
 
-# variables
+# global variables
+MONTHS = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 player_health = 5
 food_pounds = 500
 miles_to_go = 2000
 current_day = 1
 current_month = 3
 
-# functions
-def add_day():
-    global current_day
-    global current_month
+# function defs
+def add_day(days):
+    global current_day, current_month
     months_31_days = [3, 5, 7, 8, 10, 12]
+    current_day += days
     if current_day > 30 and current_month / 2 != str:
         current_day -= 30
         current_month += 1
     elif current_day > 31:
         current_day -= 31
-        if current_month == months_31_days[0] or current_month == months_31_days[1] \
-            or current_month[2] or current_month[3] or current_month[4] or current_month[5]:
+        if current_month in months_31_days:
             current_month += 1
+
+def travel():
+    global miles_to_go, current_day
+    miles_to_go -= random.randint(30, 61)
+    days_travelled = random.randint(3, 8)
+    add_day(days_travelled)
+    if miles_to_go < 0:
+        miles_to_go = 0
+    print(f"You have {miles_to_go} miles left. Today is {MONTHS[current_month]} {current_day}. \n")
+
+def hunt():
+    global food_pounds
+    days_hunted = random.randint(2, 6)
+    add_day(days_hunted)
+    food += 100
+    
+
+def status():
+    print(f"Your health: {player_health}. \n"
+        f"Your food supply: {food_pounds}. \n"
+        f"Miles travelled: {2000 - miles_to_go}. \n"
+        f"Current day: {MONTHS[current_month]} {current_day}. \n")
+
+def quit():
+    print("See you later!")
+
+def help():
+    print("In this game, you can either travel, hunt, rest, show your status, ask for help, or quit out of the game. \n")
+
 
 def select_action():
     pass
 
-# gameplay
+# game loop
 while True:
     if miles_to_go <= 0:
         print("Congratulations! You made it to Oregon!")
         break
-    elif player_health == 0:
+    elif player_health <= 0:
         print("Oh no! You ran out of health and died!")
         break
     elif current_month > 12:
@@ -50,20 +79,16 @@ while True:
 
     action = input(f"What would you like to do, {name}? ")
     if action == 'travel':
-       # miles_to_go -= random.randint(30, 61)
-        current_day += random.randint(3, 8)
-        add_day()
-        print(f"You have {miles_to_go} miles left, and this is day {current_day} of month {current_month}. \n")
+        travel()
     elif action == 'status':
-        print(f"Your health: {player_health}. \n"
-        f"Your food supply: {food_pounds}. \n"
-        f"Miles travelled: {2000 - miles_to_go}. \n"
-        f"Current day: {current_day}. \n")
-    elif action == 'help':
-        print("{name}, in this game, you can travel, hunt, rest, show your status, list these commands, or quit out of the game. \n")
+        status()
     elif action == 'quit':
-        print("See you later!")
+        quit()
         break
+    elif action == 'help':
+        help()
+    else:
+        print("That's not a function. In this game, you can either travel, hunt, rest, show your status, ask for help, or quit out of the game. \n")
     
     
     
