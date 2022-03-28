@@ -8,7 +8,7 @@ print("Welcome to the Oregon Trail! \n"
 
 # asks for name
 name = input("What is your name? ")
-print(f"{name}, in this game, you can travel, hunt, rest, show your status, ask for help, or quit out of the game. \n")
+print(f"{name}, in this game, you can either travel, hunt, rest, show your status, ask for help, or quit out of the game. \n")
 
 # global variables
 MONTHS = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -20,17 +20,23 @@ current_month = 3
 
 # function defs
 def add_day(days):
-    global current_day, current_month, food_pounds
+    global current_day, current_month, food_pounds, player_health
     months_31_days = [3, 5, 7, 8, 10, 12]
     current_day += days
     food_pounds -= days * 5
     if current_day > 30 and current_month / 2 != str:
         current_day -= 30
         current_month += 1
+        player_health -= 2 # couldn't figure out an efficient way to make a player's health decrease
+        if player_health <= -1:
+            player_health = 0
     elif current_day > 31:
         current_day -= 31
         if current_month in months_31_days:
             current_month += 1
+            player_health -= 2 # this also interferes with rest() if one rests at the end of a month, and I can't figure out a workaround
+            if player_health <=-1:
+                player_health = 0
 
 def travel():
     global miles_to_go, current_day, food_pounds, player_health
@@ -48,14 +54,15 @@ def hunt():
     days_hunted = random.randint(2, 6)
     add_day(days_hunted)
     food_pounds += 100
-    print("Nice! You now have 100 more pounds of food. It is now {MONTHS[current_month]} {current_day}. \n")
+    print(f"Nice! You now have 100 more pounds of food. It is now {MONTHS[current_month]} {current_day}. \n")
 
 def rest():
     global player_health
     days_rested = random.randint(2, 6)
     add_day(days_rested)
     player_health += 1
-    if player_health >= 5:
+    print(f"Your health is now at {player_health}.")
+    if player_health > 5:
         print(f"What are you resting for, you lazy person? It is now {MONTHS[current_month]} {current_day}! You're wasting time! \n")
         player_health -=1
 
