@@ -37,6 +37,8 @@ def add_day(days):
             player_health -= 2 # this also interferes with rest() if one rests at the end of a month, and I can't figure out a workaround
             if player_health <=-1:
                 player_health = 0
+    if current_month > 12:
+        current_month = 1
 
 def travel():
     global miles_to_go, current_day, food_pounds, player_health
@@ -90,7 +92,7 @@ while True:
     elif player_health <= 0:
         print("Oh no! You ran out of health and died!")
         break
-    elif current_month > 12:
+    elif current_month == 1:
         print("Oh no! You didn't make it to Oregon on time!")
         break
     elif food_pounds == 0:
